@@ -44,7 +44,7 @@ def health(request: Request):
 
 @app.post("/generate-resume")
 @limiter.limit("5/minute")
-async def generate_resume(file: UploadFile = File(...), template_id: str = Form(...)):
+async def generate_resume(request: Request, file: UploadFile = File(...), template_id: str = Form(...)):
     print("got a request to generate resume template id: " + template_id)
     # Read and extract text from the uploaded PDF
     pdf_content = await file.read()

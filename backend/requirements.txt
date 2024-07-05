@@ -3,4 +3,5 @@ uvicorn
 PyPDF2
 python-dotenv
 google-generativeai
+regex
 

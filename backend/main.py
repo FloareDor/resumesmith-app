@@ -32,7 +32,7 @@ GOOGLE_API_KEY=env.get('GOOGLE_API_KEY')
 genai.configure(api_key=GOOGLE_API_KEY)
 model = genai.GenerativeModel('gemini-1.5-flash')
 
-@app.post("/health")
+@app.get("/health")
 def health():
     return {"status":"ok"}
 

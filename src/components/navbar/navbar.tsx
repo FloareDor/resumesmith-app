@@ -1,4 +1,5 @@
 import Link from "next/link"
+import React from 'react';
 
 const Navbar = () => {
 
@@ -22,7 +23,7 @@ const Navbar = () => {
       </header>
 	)
 
-	function ResumeSmithLogo(props) {
+	function ResumeSmithLogo(props: React.SVGProps<SVGSVGElement>) {
 		return (
 		  <svg
 			{...props}

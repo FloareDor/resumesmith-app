@@ -17,7 +17,7 @@ app = FastAPI()
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"], 
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -31,6 +31,10 @@ if ENV_FILE:
 GOOGLE_API_KEY=env.get('GOOGLE_API_KEY')
 genai.configure(api_key=GOOGLE_API_KEY)
 model = genai.GenerativeModel('gemini-1.5-flash')
+
+@app.post("/health")
+def health():
+    return {"status":"ok"}
 
 @app.post("/generate-resume")
 async def generate_resume(file: UploadFile = File(...), template_id: str = Form(...)):
@@ -101,3 +105,10 @@ async def generate_resume(file: UploadFile = File(...), template_id: str = Form(
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+    # uvicorn.run(
+    #     app,
+    #     host="0.0.0.0",
+    #     port=8000,
+    #     ssl_keyfile="/etc/letsencrypt/live/ratemuprofs.live/privkey.pem",
+    #     ssl_certfile="/etc/letsencrypt/live/ratemuprofs.live/fullchain.pem"
+    # )

@@ -3,6 +3,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import Navbar from "../navbar/navbar"
+import Image from "next/image";
 
 export function Landing() {
   return (
@@ -31,7 +32,7 @@ export function Landing() {
                 </Link>
               </div>
             </div>
-            {/* <img
+            {/* <Image
               src="/placeholder.svg"
               alt="Hero"
               className="mx-auto aspect-square overflow-hidden rounded-xl object-cover sm:w-full lg:order-last"
@@ -57,7 +58,7 @@ export function Landing() {
                   <CardDescription>A clean and simple layout that focuses on your key information.</CardDescription>
                 </CardHeader>
                 <CardContent className="flex-1">
-                  {/* <img
+                  {/* <Image
                     src="images/minimal-resume.png"
                     alt="Minimalist Resume"
                     className="mx-auto aspect-[3/2] overflow-hidden rounded-lg object-cover hover:scale-[170%] duration-200"
@@ -79,7 +80,7 @@ export function Landing() {
                   <CardDescription>A sleek and contemporary design that highlights your achievements.</CardDescription>
                 </CardHeader>
                 <CardContent className="flex-1">
-                  {/* <img
+                  {/* <Image
                     src="images/modern-resume.png"
                     alt="Modern Resume"
                     className="mx-auto aspect-[3/2] overflow-hidden rounded-lg object-cover hover:scale-[170%] duration-200"
@@ -103,7 +104,7 @@ export function Landing() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="flex-1">
-                  {/* <img
+                  {/* <Image
                     src="images/jakes-resume.jpeg"
                     alt="Professional Resume"
                     className="mx-auto aspect-[3/2] overflow-hidden rounded-lg object-cover hover:scale-[170%] duration-200"

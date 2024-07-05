@@ -3,6 +3,7 @@ import { X, Loader2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Template } from "./FormatPage";
+import Image from "next/image";
 
 type TemplateStepProps = {
   templates: Template[];
@@ -46,7 +47,7 @@ export function TemplateStep({
               <CardTitle>{template.name}</CardTitle>
             </CardHeader>
             <CardContent>
-              <img src={template.image} alt={template.name} className="w-full max-h-[460px] lg:h-48 lg:opacity-5 rounded-md hover:block lg:hover:opacity-100 lg:hover:h-auto lg:hover:scale-[101%] duration-300 " />
+              <Image src={template.image} alt={template.name} className="w-full max-h-[460px] lg:h-48 lg:opacity-5 rounded-md hover:block lg:hover:opacity-100 lg:hover:h-auto lg:hover:scale-[101%] duration-300 " />
             </CardContent>
           </Card>
         ))}

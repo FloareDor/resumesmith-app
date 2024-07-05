@@ -1,0 +1,74 @@
+from fastapi import FastAPI, File, UploadFile, Form
+from fastapi.middleware.cors import CORSMiddleware
+from os import environ as env
+from dotenv import find_dotenv, load_dotenv
+import google.generativeai as genai
+ENV_FILE = find_dotenv()
+if ENV_FILE:    
+    load_dotenv(ENV_FILE)
+   
+GOOGLE_API_KEY=env.get('GOOGLE_API_KEY')
+genai.configure(api_key=GOOGLE_API_KEY)
+for m in genai.list_models():
+  if 'generateContent' in m.supported_generation_methods:
+    print(m.name)
+model = genai.GenerativeModel('gemini-1.5-flash')
+response = model.generate_content("What is the meaning of life?")
+print(response.text)
+app = FastAPI()
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # Add your frontend URL
+    allow_credentials=True,
+    allow_methods=[""],
+    allow_headers=[""],
+)
+@app.post("/generate-resume")
+async def generate_resume(file: UploadFile = File(...), template_id: str = Form(...)):
+    return {"message": f"Resume generated with template {template_id}"}
+if name == "main":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+
+write one fastapi end point with cors middleware
+
+/generate-resume
+
+in generate resume
+
+get the pdf file, convert the pdf file to text,
+
+save it as "resume_text"
+
+
+get resume_template_latex based on template_id, they are saved here:
+templates/1.tex, templates/2.tex, templates/3.tex
+
+get user_pdf_text using this code:
+from PyPDF2 import PdfReader
+
+reader = PdfReader('/content/drive/My Drive/Colab Notebooks/DATA_FOLDERS/PDF/some_pdf_doc.pdf')
+page = reader.pages[0]
+extracted_text = page.extract_text()
+
+
+then send this exact prompt to gemini api:
+here is a famous resume template, replace the template's content with picked details from my resume and give me the latex code only as output.
+here is the resume template:
+{resume_template_latex}
+here is my resume content:
+{user_pdf_text}
+
+then get the latex response, compile it using the code im giving you so that dont confuse between mutliple users pdf. is this approach right?
+
+
+import subprocess
+import uuid
+pdf_id = uuid.uuid4().hex
+pdfs_directory = "/pdfs"
+with open(f"{pdfs_directory}/{pdf_id}.tex", "w") as tex_file:
+    tex_file.write(r"""
+{latex_response_from_gemini}
+""")
+subprocess.call(["pdflatex", f"{pdfs_directory}/{pdf_id}.tex"])

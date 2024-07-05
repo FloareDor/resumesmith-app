@@ -42,7 +42,7 @@ export function FormatPage() {
     formData.append("template_id", selectedTemplate.toString());
 
     try {
-      const response = await fetch("http://ratemuprofs.live:8000/generate-resume", {
+      const response = await fetch("https://ratemuprofs.live:8000/generate-resume", {
         method: "POST",
         body: formData,
       });

@@ -10,7 +10,7 @@ export function Landing() {
     <div className="flex flex-col min-h-[100dvh]">
       <Navbar/>
       <main className="flex-1">
-      <section className="w-full py-[50%] md:py-24 lg:py-32 xl:py-72 flex items-center justify-center">
+      <section className="w-full py-[60%] md:py-24 lg:py-32 xl:py-72 flex items-center justify-center">
           <div className="container px-4 md:px-6 text-center">
             <div className="flex flex-col justify-center space-y-4">
               <div className="space-y-2">

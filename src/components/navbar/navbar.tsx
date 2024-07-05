@@ -13,12 +13,6 @@ const Navbar = () => {
           <Link href="/format" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false}>
             Format
           </Link>
-          <Link href="#" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false}>
-            About
-          </Link>
-          <Link href="#" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false}>
-            Contact
-          </Link>
         </nav>
       </header>
 	)

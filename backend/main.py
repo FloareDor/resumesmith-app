@@ -55,9 +55,10 @@ async def generate_resume(file: UploadFile = File(...), template_id: str = Form(
     pattern = re.compile(r'[^\x00-\x7F]+')
 
     resume_text2 = resume_text.encode('utf-8', 'replace').decode('utf-8')
-    cleaned_resume_text = resume_text2.replace("#", "sharp").replace(r'/[\x{fffe}-\x{ffff}]/u', '').replace('�', "").replace("&", "and")
+    cleaned_resume_text = resume_text2.replace("#", "sharp").replace(r'/[\x{fffe}-\x{ffff}]/u', '').replace('�', "").replace("&", "and").replace("$", "USD")
     cleaned_resume_text = pattern.sub('', cleaned_resume_text)
     modified_string = re.sub("&", "and", cleaned_resume_text)
+    modified_string = re.sub("$", "USD", modified_string)
 
     print("##############################")
 
@@ -68,7 +69,7 @@ async def generate_resume(file: UploadFile = File(...), template_id: str = Form(
     Here is a famous resume template, replace the template's content with picked details from my resume and give me the latex code only as output.
     strictly keep the resume output single page. you can cut down on content from my resume or summarize or pick the good parts based on standard swe job guidelines.
     if there is too much info you need it to only include 2 internships, 2 projects and skills and highest 2 education levels for one page.
-    Make sure I don't get errors when compiling your latex code like this ! Package keycommand Error: The key-value pairs 
+    Make sure I don't get errors when compiling your latex code.
     Here is the resume template:
     {resume_template_latex}
     Here is my resume content:

@@ -47,7 +47,7 @@ export function TemplateStep({
               <CardTitle>{template.name}</CardTitle>
             </CardHeader>
             <CardContent>
-              <Image src={template.image} alt={template.name} className="w-full max-h-[460px] lg:h-48 lg:opacity-5 rounded-md hover:block lg:hover:opacity-100 lg:hover:h-auto lg:hover:scale-[101%] duration-300 " />
+              <Image src={template.image} alt={template.name} width={400} height={460} className="w-full max-h-[460px] lg:h-48 lg:opacity-5 rounded-md hover:block lg:hover:opacity-100 lg:hover:h-auto lg:hover:scale-[101%] duration-300 " />
             </CardContent>
           </Card>
         ))}

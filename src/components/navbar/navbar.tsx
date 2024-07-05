@@ -10,7 +10,7 @@ const Navbar = () => {
           <span className="sr-only">Resume Smith</span>
         </Link>
         <nav className="ml-auto flex gap-4 sm:gap-6">
-          <Link href="#" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false}>
+          <Link href="/format" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false}>
             Format
           </Link>
           <Link href="#" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false}>

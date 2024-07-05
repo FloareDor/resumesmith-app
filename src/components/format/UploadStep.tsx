@@ -8,10 +8,10 @@ type UploadStepProps = {
 export function UploadStep({ onFileUpload }: UploadStepProps) {
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const uploadedFile = event.target.files?.[0];
-    if (uploadedFile && ["application/pdf", "image/png", "image/jpeg"].includes(uploadedFile.type)) {
+    if (uploadedFile && uploadedFile.type === "application/pdf") {
       onFileUpload(uploadedFile);
     } else {
-      alert("Please upload a PDF, PNG, or JPEG file.");
+      alert("Please upload a PDF file.");
     }
   };
 
@@ -26,7 +26,7 @@ export function UploadStep({ onFileUpload }: UploadStepProps) {
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold mb-4">Upload Your Resume</h1>
         <p className="text-muted-foreground">
-          Upload your existing resume in PDF, PNG, or JPEG format to get started.
+          Upload your existing resume in PDF format to get started.
         </p>
       </div>
       <div className="max-w-md mx-auto">
@@ -39,9 +39,9 @@ export function UploadStep({ onFileUpload }: UploadStepProps) {
             <p className="mb-2 text-sm text-gray-500">
               <span className="font-semibold">Click to upload</span> or drag and drop
             </p>
-            <p className="text-xs text-gray-500">PDF, PNG, or JPEG (MAX. 10MB)</p>
+            <p className="text-xs text-gray-500">PDF only (MAX. 10MB)</p>
           </div>
-          <input id="file-upload" type="file" className="hidden" onChange={handleFileUpload} accept=".pdf,.png,.jpg,.jpeg" />
+          <input id="file-upload" type="file" className="hidden" onChange={handleFileUpload} accept=".pdf" />
         </label>
       </div>
     </motion.div>

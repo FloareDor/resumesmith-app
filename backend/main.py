@@ -1,4 +1,4 @@
-from fastapi import FastAPI, File, UploadFile, Form, HTTPException
+from fastapi import FastAPI, File, UploadFile, Form, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from PyPDF2 import PdfReader
@@ -39,7 +39,7 @@ model = genai.GenerativeModel('gemini-1.5-flash')
 
 @app.get("/health")
 @limiter.limit("3/minute")
-def health():
+def health(request: Request):
     return {"status":"ok"}
 
 @app.post("/generate-resume")

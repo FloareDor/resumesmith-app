@@ -11,7 +11,12 @@ import io
 from dotenv import find_dotenv, load_dotenv
 import regex as re
 
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
 
+
+limiter = Limiter(key_func=get_remote_address)
 app = FastAPI()
 
 # CORS middleware
@@ -33,10 +38,12 @@ genai.configure(api_key=GOOGLE_API_KEY)
 model = genai.GenerativeModel('gemini-1.5-flash')
 
 @app.get("/health")
+@limiter.limit("3/minute")
 def health():
     return {"status":"ok"}
 
 @app.post("/generate-resume")
+@limiter.limit("5/minute")
 async def generate_resume(file: UploadFile = File(...), template_id: str = Form(...)):
     print("got a request to generate resume template id: " + template_id)
     # Read and extract text from the uploaded PDF

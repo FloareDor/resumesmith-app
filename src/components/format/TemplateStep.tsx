@@ -4,6 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Template } from "./FormatPage";
 import Image from "next/image";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 type TemplateStepProps = {
   templates: Template[];
@@ -12,6 +14,8 @@ type TemplateStepProps = {
   onGenerateResume: () => void;
   onBack: () => void;
   isGenerating: boolean;
+  singlePage: boolean;
+  onSinglePageToggle: (checked: boolean) => void;
 };
 
 export function TemplateStep({
@@ -21,6 +25,8 @@ export function TemplateStep({
   onGenerateResume,
   onBack,
   isGenerating,
+  singlePage,
+  onSinglePageToggle,
 }: TemplateStepProps) {
   return (
     <motion.div
@@ -52,23 +58,34 @@ export function TemplateStep({
           </Card>
         ))}
       </div>
-      <div className="mt-8 flex justify-between items-center">
-        <Button variant="outline" onClick={onBack} disabled={isGenerating}>
-          <X className="mr-2 h-4 w-4" /> Change File
-        </Button>
-        <Button 
-          onClick={onGenerateResume} 
-          disabled={!selectedTemplate || isGenerating}
-        >
-          {isGenerating ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Generating...
-            </>
-          ) : (
-            'Generate Resume'
-          )}
-        </Button>
+      <div className="mt-8 flex flex-col gap-4">
+        <div className="flex items-center space-x-2">
+          <Switch
+            id="single-page"
+            checked={singlePage}
+            onCheckedChange={onSinglePageToggle}
+          />
+          <Label htmlFor="single-page">Summarized to Fit</Label>
+        </div>
+        
+        <div className="flex justify-between items-center">
+          <Button variant="outline" onClick={onBack} disabled={isGenerating}>
+            <X className="mr-2 h-4 w-4" /> Change File
+          </Button>
+          <Button
+            onClick={onGenerateResume}
+            disabled={!selectedTemplate || isGenerating}
+          >
+            {isGenerating ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Generating...
+              </>
+            ) : (
+              'Generate Resume'
+            )}
+          </Button>
+        </div>
       </div>
     </motion.div>
   );

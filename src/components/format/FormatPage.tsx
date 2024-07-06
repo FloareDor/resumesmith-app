@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { UploadStep } from "./UploadStep";
 import { TemplateStep } from "./TemplateStep";
 import { PreviewStep } from "./PreviewStep";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertCircle } from "lucide-react";
 
 export type Template = {
   id: number;
@@ -22,6 +24,12 @@ export function FormatPage() {
   const [step, setStep] = useState<"upload" | "template" | "preview">("upload");
   const [generatedPdfUrl, setGeneratedPdfUrl] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [singlePage, setSinglePage] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSinglePageToggle = (checked: boolean) => {
+    setSinglePage(checked);
+  };
 
   const handleFileUpload = (uploadedFile: File) => {
     setFile(uploadedFile);
@@ -34,13 +42,12 @@ export function FormatPage() {
 
   const handleGenerateResume = async () => {
     if (!file || !selectedTemplate) return;
-
     setIsGenerating(true);
-
+    setError(null); // Clear any previous errors
     const formData = new FormData();
     formData.append("file", file);
     formData.append("template_id", selectedTemplate.toString());
-
+    formData.append("single_page", singlePage.toString());
     try {
       const response = await fetch("https://ratemuprofs.live:8000/generate-resume", {
         method: "POST",
@@ -56,7 +63,7 @@ export function FormatPage() {
       }
     } catch (error) {
       console.error("Error generating resume:", error);
-      alert("Failed to generate resume. Please try again.");
+      setError("Could not generate your resume :(\nTry a different mode.");
     } finally {
       setIsGenerating(false);
     }
@@ -65,6 +72,20 @@ export function FormatPage() {
   return (
     <main className="flex-1 container mx-auto px-12 py-20 md:py-24 lg:py-8 xl:py-8">
       <AnimatePresence mode="wait">
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -50 }}
+            className="mb-6"
+          >
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>Oops! Something went wrong</AlertTitle>
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          </motion.div>
+        )}
         {step === "upload" && (
           <UploadStep onFileUpload={handleFileUpload} />
         )}
@@ -76,6 +97,8 @@ export function FormatPage() {
             onGenerateResume={handleGenerateResume}
             onBack={() => setStep("upload")}
             isGenerating={isGenerating}
+            singlePage={singlePage}
+            onSinglePageToggle={handleSinglePageToggle}
           />
         )}
         {step === "preview" && generatedPdfUrl && (

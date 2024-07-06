@@ -3,7 +3,7 @@ import uuid
 
 
 pdf_id = uuid.uuid4().hex
-pdf_id = "b45a36001c744b1f9bb962c616271b22"
+pdf_id = "ec197f65892347a29f72062476079f7e"
 pdfs_directory = "outputs"
 # with open(f"{pdfs_directory}/{pdf_id}.tex", "w") as tex_file:
 #     tex_file.write(r"""
@@ -14,4 +14,4 @@ pdfs_directory = "outputs"
 # \end{document}
 # """)
 
-subprocess.call(["pdflatex", f"{pdfs_directory}/{pdf_id}.tex"])
+subprocess.call(["pdflatex", "-interaction=nonstopmode", "-halt-on-error",  f"{pdfs_directory}/{pdf_id}.tex"])

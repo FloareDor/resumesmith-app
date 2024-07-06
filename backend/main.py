@@ -140,7 +140,14 @@ async def generate_resume(request: Request, file: UploadFile = File(...), templa
         single_page_conditioning_prompt = """
         Here is a famous resume template, replace the template's content with picked details from my resume and give me the latex code only as output.
         strictly keep the resume output single page. you can cut down on content from my resume or summarize or pick the good parts based on standard swe job guidelines.
-        if there is too much info you need it to only include experience, 2 projects, skills, summarized achievements and highest 2 education levels for one page. Summarize my resume to Fit the template.
+        
+        if there is too much info you need it to only include:
+            strictly 2 max highest education level for one page.
+            recent experience,
+            2 projects,
+            skills,
+            summarized achievements
+        Summarize my resume to Fit the template.
         Make sure I don't get errors when compiling your latex code.\n
         """
 

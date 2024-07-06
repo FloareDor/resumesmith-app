@@ -1,19 +1,34 @@
 import { motion } from "framer-motion";
 import { Upload } from "lucide-react";
+import { useState, useCallback } from "react";
+import { useDropzone } from "react-dropzone";
 
 type UploadStepProps = {
   onFileUpload: (file: File) => void;
 };
 
 export function UploadStep({ onFileUpload }: UploadStepProps) {
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const uploadedFile = event.target.files?.[0];
+  const [isDragActive, setIsDragActive] = useState(false);
+
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    const uploadedFile = acceptedFiles[0];
     if (uploadedFile && uploadedFile.type === "application/pdf") {
       onFileUpload(uploadedFile);
     } else {
       alert("Please upload a PDF file.");
     }
-  };
+  }, [onFileUpload]);
+
+  const { getRootProps, getInputProps, isDragActive: dropzoneIsDragActive } = useDropzone({
+    onDrop,
+    accept: { "application/pdf": [".pdf"] },
+    maxSize: 10 * 1024 * 1024, // 10MB
+  });
+
+  // Update isDragActive when dropzone state changes
+  useState(() => {
+    setIsDragActive(dropzoneIsDragActive);
+  });
 
   return (
     <motion.div
@@ -30,19 +45,21 @@ export function UploadStep({ onFileUpload }: UploadStepProps) {
         </p>
       </div>
       <div className="max-w-md mx-auto">
-        <label
-          htmlFor="file-upload"
-          className="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
+        <div
+          {...getRootProps()}
+          className={`flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer ${
+            isDragActive ? "border-primary bg-primary/10" : "bg-gray-50 hover:bg-gray-100"
+          }`}
         >
+          <input {...getInputProps()} />
           <div className="flex flex-col items-center justify-center pt-5 pb-6">
-            <Upload className="w-10 h-10 mb-3 text-gray-400" />
+            <Upload className={`w-10 h-10 mb-3 ${isDragActive ? "text-primary" : "text-gray-400"}`} />
             <p className="mb-2 text-sm text-gray-500">
               <span className="font-semibold">Click to upload</span> or drag and drop
             </p>
             <p className="text-xs text-gray-500">PDF only (MAX. 10MB)</p>
           </div>
-          <input id="file-upload" type="file" className="hidden" onChange={handleFileUpload} accept=".pdf" />
-        </label>
+        </div>
       </div>
     </motion.div>
   );

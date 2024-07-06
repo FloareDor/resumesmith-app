@@ -127,7 +127,7 @@ export function Landing() {
           <div className="container grid items-center justify-center gap-4 px-4 text-center md:px-6">
             <div className="space-y-3">
               <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
-                Get your resume ready for the job search
+                Get your resume ready for job search
               </h2>
               <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                 Let Resume Smith help you create a professional and eye-catching resume that will impress potential

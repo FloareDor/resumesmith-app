@@ -27,6 +27,9 @@ export function PreviewStep({ pdfUrl }: PreviewStepProps) {
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold mb-4">Your Generated Resume</h1>
         <p className="text-muted-foreground">Preview your resume and download it.</p>
+        <Button onClick={handleDownload} className="mt-4">
+          <Download className="mr-2 h-4 w-4" /> Download PDF
+        </Button>
       </div>
       <div className="flex flex-col items-center">
         <iframe
@@ -34,9 +37,7 @@ export function PreviewStep({ pdfUrl }: PreviewStepProps) {
           className="w-full h-[600px] mb-4 border rounded-lg"
           title="Generated Resume"
         />
-        <Button onClick={handleDownload} className="mt-4">
-          <Download className="mr-2 h-4 w-4" /> Download PDF
-        </Button>
+
       </div>
     </motion.div>
   );

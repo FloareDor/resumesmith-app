@@ -94,7 +94,7 @@ if ENV_FILE:
 # Configure Gemini API
 GOOGLE_API_KEY=env.get('GOOGLE_API_KEY')
 genai.configure(api_key=GOOGLE_API_KEY)
-model = genai.GenerativeModel('gemini-1.5-flash')
+model = genai.GenerativeModel('gemini-2.5-flash')
 
 @app.get("/health")
 @limiter.limit("3/minute")

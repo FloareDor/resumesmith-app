@@ -51,3 +51,6 @@ next-env.d.ts
 .env.local
 
 ./backend
+
+# generated outputs
+/outputs/

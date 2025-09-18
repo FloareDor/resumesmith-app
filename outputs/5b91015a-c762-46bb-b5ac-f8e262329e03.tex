@@ -1,0 +1,153 @@
+
+\documentclass[9pt]{developercv} % Default font size, values from 8-12pt are recommended
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	TITLE AND CONTACT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\begin{minipage}[t]{0.55\textwidth} % Increased width for name to accommodate longer text
+	\vspace{-\baselineskip} % Required for vertically aligning minipages
+	
+	\colorbox{black}{{\Huge\textcolor{white}{\textbf{\MakeUppercase{Sai Ravi Teja}}}}} % First name (font size reduced from \HUGE for fit)
+	
+	\colorbox{black}{{\Huge\textcolor{white}{\textbf{\MakeUppercase{Gangavarapu}}}}} % Last name (font size reduced from \HUGE for fit)
+	
+	\vspace{6pt}
+	
+	{\huge Software Engineer / ML Engineer} % Career or current job title
+\end{minipage}
+\begin{minipage}[t]{0.225\textwidth} % Reduced width for icon blocks
+	\vspace{-\baselineskip} % Required for vertically aligning minipages
+	
+	% The first parameter is the FontAwesome icon name, the second is the box size and the third is the text
+	% Other icons can be found by referring to fontawesome.pdf (supplied with the template) and using the word after \fa in the command for the icon you want
+	\icon{MapMarker}{12}{Pittsburgh, PA}\\
+	\icon{Phone}{12}{(412) 251-7161}\\
+	\icon{At}{12}{\href{mailto:sairavig@andrew.cmu.edu}{sairavig@andrew.cmu.edu}}\\	
+\end{minipage}
+\begin{minipage}[t]{0.225\textwidth} % Reduced width for icon blocks
+	\vspace{-\baselineskip} % Required for vertically aligning minipages
+	
+	% The first parameter is the FontAwesome icon name, the second is the box size and the third is the text
+	% Other icons can be found by referring to fontawesome.pdf (supplied with the template) and using the word after \fa in the command for the icon you want
+	\icon{Globe}{12}{\href{https://floaredor.vercel.app}{floaredor.vercel.app}}\\
+	% GitHub and Twitter links omitted as they were not provided in the resume content
+\end{minipage}
+
+\vspace{0.5cm}
+
+%----------------------------------------------------------------------------------------
+%	EXPERIENCE
+%----------------------------------------------------------------------------------------
+
+\cvsect{Experience}
+
+\begin{entrylist}
+	\entry
+		{Jul 2024 -- Jun 2025}
+		{Founding Software Engineer}
+		{Tapsta}
+		{
+            \begin{itemize}
+                \item Architected and developed full-stack social rewards mobile app (React, React Native, FastAPI, PostgreSQL).
+                \item Optimized database and client-side operations, achieving 30\% faster response times and 40\% user retention.
+                \item Integrated Plaid API for secure bank connectivity, enabling automated cashback/ACH for 1,500+ users.
+                \item Deployed containerized CI/CD pipeline (Docker, AWS, ArgoCD), reducing deployment time by 70\%.
+                \item Led a team of 3 SDE interns, establishing code review processes that boosted feature delivery by 30\%.
+                \item Built a semantic people search engine for alumni networks using LangGraph.
+            \end{itemize}
+            \texttt{React}\slashsep\texttt{React Native}\slashsep\texttt{FastAPI}\slashsep\texttt{PostgreSQL}\slashsep\texttt{Docker}\slashsep\texttt{AWS}\slashsep\texttt{ArgoCD}\slashsep\texttt{LangGraph}
+        }
+	\entry
+		{Apr 2023 -- Dec 2023}
+		{SDE Intern}
+		{Catalog.fi}
+		{
+            \begin{itemize}
+                \item Fine-tuned LLaMA/BERT with APIs for a natural-language payroll interface, achieving 90\% accuracy and 25\% faster integration.
+                \item Implemented a full-stack crypto analytics platform (React, FastAPI, Postgres, Go) with a real-time monitoring dashboard.
+                \item Optimized backend performance using Go and PostgreSQL, supporting \$150M+ trading volume with 20\% faster queries.
+            \end{itemize}
+            \texttt{LLaMA}\slashsep\texttt{BERT}\slashsep\texttt{PyTorch}\slashsep\texttt{React}\slashsep\texttt{FastAPI}\slashsep\texttt{PostgreSQL}\slashsep\texttt{Go}\slashsep\texttt{Pandas}
+        }
+	\entry
+		{Feb 2024 -- Jun 2024}
+		{Research Assistant}
+		{University of Florida, Gainesville, FL}
+		{
+            \begin{itemize}
+                \item Applied transformer architectures for rare disease prediction, processing 15,000+ DNA sequences.
+                \item Developed multi-layer perceptron models using protein embeddings (ESM3) for RNA-binding protein analysis.
+            \end{itemize}
+            \texttt{Transformer Architectures}\slashsep\texttt{MLP}\slashsep\texttt{Genomic Models}
+        }
+\end{entrylist}
+
+%----------------------------------------------------------------------------------------
+%	PROJECTS
+%----------------------------------------------------------------------------------------
+
+\cvsect{Projects}
+
+\begin{entrylist}
+	\entry
+		{OneAIClick.com}
+		{LLM Fine-tuning Abstraction Tool}
+		{Python, React.js, HuggingFace, PEFT/LoRA}
+		{Developed an LLM fine-tuning abstraction tool that cut development cycles by 60\% and boilerplate code by 75\%, enabling rapid idea validation and full data privacy.}
+	\entry
+		{Project RECON}
+		{8-Node Compute Cluster}
+		{Raspberry Pi, OpenMPI, GlusterFS}
+		{Architected an 8-node Raspberry Pi 4B compute cluster with distributed storage, LDAP authentication, and Slurm job scheduling, serving 400+ students for coursework.}
+\end{entrylist}
+
+%----------------------------------------------------------------------------------------
+%	EDUCATION
+%----------------------------------------------------------------------------------------
+
+\cvsect{Education}
+
+\begin{entrylist}
+	\entry
+		{Aug 2025 -- Dec 2026}
+		{Master of Software Engineering - Scalable Systems}
+		{Carnegie Mellon University, Pittsburgh, PA}
+		{Relevant coursework: Statistics, Product Management, Design Patterns, Agile}
+	\entry
+		{Aug 2020 -- Aug 2024}
+		{B.Tech in Computer Science}
+		{Mahindra University, Hyderabad, India}
+		{Relevant coursework: OS, Discrete Math, HPC, ML, NLP, Optimization, Deep Learning, MPI}
+\end{entrylist}
+
+%----------------------------------------------------------------------------------------
+%	SKILLS & ACHIEVEMENTS
+%----------------------------------------------------------------------------------------
+
+\cvsect{Technical Skills}
+
+\textbf{Languages:} Python, Go, C++, JavaScript, TypeScript, SQL\\
+\textbf{Frameworks/Libraries:} React, Next.js, FastAPI, Django, PyTorch, TensorFlow, Langchain, Pandas, NumPy, Pydantic, SQLAlchemy, React Native, OpenGL, CUDA\\
+\textbf{Cloud/DevOps:} Docker, Kubernetes, AWS, Git, ArgoCD, Celery, Redis\\
+\textbf{Databases:} PostgreSQL, MySQL, NoSQL, MongoDB\\
+\textbf{Concepts:} Deep Learning, Machine Learning, Distributed Systems, HPC, Data Structures \& Algorithms, Agile
+
+\vspace{0.5cm} % Add some space between sections
+
+\cvsect{Leadership \& Awards}
+
+\begin{itemize}
+    \item \textbf{President, Enigma (CS Club):} Increased membership by 40\% (2000+ students) through technical workshops and industry collaborations (Ubisoft, NVIDIA).
+    \item \textbf{1st Place WaffleHacks 2024:} Built FlashFocus, an AI flashcard Chrome extension using a RAG system (320+ participants).
+    \item \textbf{1st Place Noderunner Hackathon 2023:} Engineered a distributed cluster implementing Raft consensus protocol from scratch (50 teams).
+    \item \textbf{Publications:} Co-authored research on emotion-aligned music composition (IEEE CEC 2024) and online customer review analysis (TASM 2025).
+\end{itemize}
+
+%----------------------------------------------------------------------------------------
+
+\end{document}

@@ -26,6 +26,7 @@ export function FormatPage() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [singlePage, setSinglePage] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [generatedLatex, setGeneratedLatex] = useState<string | null>(null);
 
   const handleSinglePageToggle = (checked: boolean) => {
     setSinglePage(checked);
@@ -48,14 +49,17 @@ export function FormatPage() {
     formData.append("file", file);
     formData.append("template_id", selectedTemplate.toString());
     formData.append("single_page", singlePage.toString());
+    formData.append("return_json", "true");
     try {
       const response = await fetch("/api/generate-resume", {
         method: "POST",
         body: formData,
       });
       if (response.ok) {
-        const blob = await response.blob();
-        const pdfUrl = URL.createObjectURL(blob);
+        const data = await response.json();
+        const pdfBlob = new Blob([Uint8Array.from(atob(data.pdfBase64), c => c.charCodeAt(0))], { type: 'application/pdf' });
+        const pdfUrl = URL.createObjectURL(pdfBlob);
+        setGeneratedLatex(data.latex as string);
         setGeneratedPdfUrl(pdfUrl);
         setStep("preview");
       } else {
@@ -102,7 +106,7 @@ export function FormatPage() {
           />
         )}
         {step === "preview" && generatedPdfUrl && (
-          <PreviewStep pdfUrl={generatedPdfUrl} />
+          <PreviewStep pdfUrl={generatedPdfUrl} latex={generatedLatex || ''} onUpdate={(newPdfUrl, newLatex) => { setGeneratedPdfUrl(newPdfUrl); setGeneratedLatex(newLatex); }} />
         )}
       </AnimatePresence>
     </main>

@@ -27,12 +27,24 @@ if there is too much info you need it to only include:
     skills,
     summarized achievements
 Summarize my resume to Fit the template.
-Make sure I don't get errors when compiling your latex code.
+
+CRITICAL: Generate ONLY valid LaTeX code that compiles without errors:
+- Use only standard LaTeX document classes (article, report, etc.)
+- Escape special characters: & becomes \\&, % becomes \\%, $ becomes \\$, # becomes \\#
+- Use \\section{} for section titles, not \\section{Achievements & Leadership}
+- Do not reference custom .cls files that don't exist
+- Use proper LaTeX syntax for all commands
 `;
 
 const NORMAL_PROMPT = `
 Here is a famous resume template, replace the template's content with picked details from my resume and give me the latex code only as output.
-Make sure I don't get errors when compiling your latex code.
+
+CRITICAL: Generate ONLY valid LaTeX code that compiles without errors:
+- Use only standard LaTeX document classes (article, report, etc.)
+- Escape special characters: & becomes \\&, % becomes \\%, $ becomes \\$, # becomes \\#
+- Use \\section{} for section titles, not \\section{Achievements & Leadership}
+- Do not reference custom .cls files that don't exist
+- Use proper LaTeX syntax for all commands
 `;
 
 function sanitizeResumeText(input: string): string {
@@ -52,7 +64,15 @@ function replaceColorPackage(latex: string): string {
     .replace(/[^\x00-\x7F]+/g, '')
     .replace(/dvipsyn|dvipsypes|dvipsines|dvipshade/g, 'dvipsnames')
     .replace(/\\usepackage\[usenames,dvips[^\]]*\]\{color\}/g, '\\usepackage[usenames,dvipsnames]{color}')
-    .replace(/(\\usepackage\[usenames,)(.*?)(,dvipsnames)\]/g, (_m, g1, _g2, g3) => `${g1}${g3}`);
+    .replace(/(\\usepackage\[usenames,)(.*?)(,dvipsnames)\]/g, (_m, g1, _g2, g3) => `${g1}${g3}`)
+    // Fix common LaTeX syntax errors
+    .replace(/\\section\{([^}]*&[^}]*)\}/g, (match, content) => `\\section{${content.replace(/&/g, '\\&')}}`)
+    .replace(/\\subsection\{([^}]*&[^}]*)\}/g, (match, content) => `\\subsection{${content.replace(/&/g, '\\&')}}`)
+    .replace(/\\subsubsection\{([^}]*&[^}]*)\}/g, (match, content) => `\\subsubsection{${content.replace(/&/g, '\\&')}}`)
+    // Remove references to custom document classes that don't exist
+    .replace(/\\documentclass\{developercv\}/g, '\\documentclass{article}')
+    .replace(/\\documentclass\{resume\}/g, '\\documentclass{article}')
+    .replace(/\\documentclass\{cv\}/g, '\\documentclass{article}');
 }
 
 async function parseForm(req: NextApiRequest): Promise<{ fields: Fields; files: Files }>
@@ -110,6 +130,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { fields, files } = await parseForm(req);
     const templateId = String(fields.template_id ?? fields.templateId ?? '1');
     const singlePage = String(fields.single_page ?? fields.singlePage ?? 'true');
+    const returnJson = String(fields.return_json ?? fields.returnJson ?? 'false') === 'true';
 
     const pdfBuffer = await readUploadedPdf(files);
     const extracted = await extractTextFromPdf(pdfBuffer);
@@ -145,12 +166,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(500).json({ error: 'PDF generation failed' });
     }
 
-    const stat = await fsp.stat(pdfPath);
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'attachment; filename="generated_resume.pdf"');
-    res.setHeader('Content-Length', stat.size.toString());
-    const stream = fs.createReadStream(pdfPath);
-    stream.pipe(res);
+    if (returnJson) {
+      const pdfBuffer = await fsp.readFile(pdfPath);
+      const pdfBase64 = pdfBuffer.toString('base64');
+      return res.status(200).json({ latex, pdfBase64 });
+    } else {
+      const stat = await fsp.stat(pdfPath);
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', 'attachment; filename="generated_resume.pdf"');
+      res.setHeader('Content-Length', stat.size.toString());
+      const stream = fs.createReadStream(pdfPath);
+      stream.pipe(res);
+    }
   } catch (err: any) {
     console.error('generate-resume error:', err);
     res.status(400).json({ error: 'An error occurred while processing your request' });
